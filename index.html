@@ -1,9 +1,342 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta http-equiv="refresh" content="0; url=untitled%20folder/index.html" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dEugenep — The Design House of Daxton Eugene Price</title>
+  <meta name="description" content="The design house of Daxton Eugene Price — where naturalism, craftsmanship, and the patina of time define modern fashion." />
+
+  <!-- Load Didot-style font -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+    body {
+      background-color: #f3efe8;
+      color: #111;
+      font-family: 'Playfair Display', serif;
+      overflow-x: hidden;
+    }
+
+    section {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      transition: opacity 1.2s ease;
+    }
+
+    /* Floating Logo */
+    .floating-logo {
+      position: fixed;
+      top: 25px;
+      left: 40px;
+      width: 70px;
+      height: auto;
+      opacity: 0;
+      transition: opacity 1s ease;
+      z-index: 50;
+    }
+    .floating-logo.visible { opacity: 1; }
+
+    /* Intro Section */
+    .intro {
+      height: 100vh;
+      background-color: #f3efe8;
+      position: relative;
+    }
+    .logo {
+      width: 200px;
+      height: auto;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeIn 2s ease forwards;
+      animation-delay: 0.3s;
+    }
+    .tagline {
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      color: #222;
+      opacity: 0;
+      animation: fadeIn 2s ease forwards;
+      animation-delay: 1s;
+      text-transform: lowercase;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Scroll Arrow */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      font-size: 1.3rem;
+      color: #888;
+      opacity: 0;
+      animation: arrowFade 6s ease-in-out infinite;
+    }
+    @keyframes arrowFade {
+      0%, 100% { opacity: 0; transform: translateY(0); }
+      50% { opacity: 1; transform: translateY(10px); }
+    }
+
+    /* Transition Image Section */
+    .transition-photo {
+      background: url('dax-1.jpeg') center/cover no-repeat fixed;
+      height: 100vh;
+      opacity: 0;
+      animation: fadeImage 2s ease forwards;
+      animation-delay: 2s;
+    }
+    @keyframes fadeImage {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Profile Section */
+    .profile {
+      background-color: #f3efe8;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 60px;
+      padding: 6rem 8%;
+      min-height: 100vh;
+      text-align: left;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1.2s ease, transform 1.2s ease;
+    }
+    .profile.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .profile img {
+      width: 360px;
+      height: auto;
+      border-radius: 3px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    .profile-text {
+      flex: 1;
+    }
+    .profile h2 {
+      font-weight: 500;
+      font-size: 1.4rem;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+    }
+    .profile p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #222;
+      max-width: 700px;
+      margin-bottom: 2rem;
+      letter-spacing: -0.02em;
+    }
+
+    /* Collection Preview */
+    .collection {
+      background-color: #f3efe8;
+      padding: 6rem 4rem;
+      text-align: center;
+    }
+
+    .collection-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      margin-bottom: 3rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .collection-title.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .collection-title::before,
+    .collection-title::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background-color: rgba(0,0,0,0.1);
+      margin: 0 20px;
+    }
+
+    .collection-title h2 {
+      font-weight: 500;
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .collection-gallery {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 1rem;
+    }
+    .collection-gallery::-webkit-scrollbar {
+      display: none;
+    }
+    .collection-gallery img {
+      width: 360px;
+      height: 480px;
+      object-fit: cover;
+      border-radius: 3px;
+      scroll-snap-align: start;
+      transition: transform 0.6s ease, box-shadow 0.6s ease;
+    }
+    .collection-gallery img:hover {
+      transform: scale(1.02);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    /* Links */
+    .links {
+      margin-top: 1rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+    }
+    .links a {
+      color: #111;
+      text-decoration: none;
+      margin-right: 1rem;
+      position: relative;
+      padding-bottom: 2px;
+      transition: color 0.3s ease;
+    }
+    .links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0%;
+      height: 1px;
+      background-color: #111;
+      transition: width 0.4s ease;
+    }
+    .links a:hover::after {
+      width: 100%;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #666;
+      padding: 2.5rem 0;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 0.08em;
+      border-top: 1px solid rgba(0,0,0,0.05);
+    }
+    footer p {
+      margin: 4px 0;
+    }
+
+    @media (max-width: 800px) {
+      .profile {
+        flex-direction: column;
+        text-align: center;
+      }
+      .profile img {
+        width: 70%;
+        margin-bottom: 2rem;
+      }
+      .collection-gallery img {
+        width: 280px;
+        height: 380px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <p>Redirecting...</p>
+
+  <!-- Floating Logo -->
+  <img src="deugenep-logo.png" alt="dEugenep Logo" class="floating-logo" id="floatingLogo" />
+
+  <!-- Intro -->
+  <section class="intro">
+    <img src="deugenep-logo.png" alt="dEugenep Logo" class="logo" />
+    <p class="tagline">his presence subtly woven into the fabric of his own creation</p>
+    <div class="scroll-indicator">↓</div>
+  </section>
+
+  <!-- Transition Image -->
+  <section class="transition-photo"></section>
+
+  <!-- Profile -->
+  <section class="profile" id="profileSection">
+    <div class="profile-text">
+      <h2>Behind the Brand</h2>
+      <p>
+        I’m Daxton Eugene Price, a design student at The Fashion Institute through Salt Lake Community College. My design style is deeply inspired by naturalism and the concept of patina—the beauty found in the wear and aging of garments. I believe in wearing our clothes to the ground, allowing them to live with us, rather than constantly replacing them with something new. Patina reflects a garment’s story. The more a piece is worn, the more personal and meaningful it becomes to the wearer.
+      </p>
+      <p>
+        This philosophy drives much of my work. I frequently use leather as a primary textile because of how it ages—developing character and telling a unique story over time. I also incorporate intentionally unhemmed chiffon to allow garments to evolve naturally. As they unravel with wear, they begin to mirror the wearer’s journey—adding personality, individuality, and authenticity to each piece. For me, fashion is not just about aesthetics, but about honoring the lived experience within every thread.
+      </p>
+      <div class="links">
+        <a href="https://www.instagram.com/deugenep/" target="_blank">Instagram ↗</a>
+        <a href="mailto:daxtonprice1@gmail.com">Email ↗</a>
+      </div>
+    </div>
+    <img src="dax-2.jpg" alt="Portrait of Daxton Eugene Price surrounded by natural light" />
+  </section>
+
+  <!-- Collection Preview -->
+  <section class="collection">
+    <div class="collection-title" id="collectionTitle">
+      <h2>Collection Preview</h2>
+    </div>
+    <div class="collection-gallery">
+      <img src="collection1.jpg" alt="Editorial look from the dEugenep collection" />
+      <img src="collection2.jpg" alt="Detail of textile craftsmanship from dEugenep" />
+      <img src="collection3.jpg" alt="Runway piece showcasing natural tones and leatherwork" />
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 dEugenep — The Design House of Daxton Eugene Price</p>
+    <p><a href="mailto:daxtonprice1@gmail.com" style="color:#555; text-decoration:none;">Inquiries → daxtonprice1@gmail.com</a></p>
+  </footer>
+
+  <script>
+    const floatingLogo = document.getElementById('floatingLogo');
+    const profileSection = document.getElementById('profileSection');
+    const collectionTitle = document.getElementById('collectionTitle');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > window.innerHeight * 0.6) {
+        floatingLogo.classList.add('visible');
+      } else {
+        floatingLogo.classList.remove('visible');
+      }
+
+      const rect = profileSection.getBoundingClientRect();
+      if (rect.top < window.innerHeight - 150) {
+        profileSection.classList.add('visible');
+      }
+
+      const collectionRect = collectionTitle.getBoundingClientRect();
+      if (collectionRect.top < window.innerHeight - 150) {
+        collectionTitle.classList.add('visible');
+      }
+    });
+  </script>
+
 </body>
 </html>
